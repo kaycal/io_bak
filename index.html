@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Hello World (Three.js)</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel=stylesheet href="css/base.css"/>
+</head>
+<body>
+
+<script src="three.min.js"></script>
+<script src="planets_new.js"></script>
+<script src="TrackballControls.js"></script>
+<script src="scene.js"></script>
+
+
+<script>
+    var earth = new Planet({
+                        name:"Earth",
+                        size:20,
+                        aX: 150,
+                        aY: 150,
+                        zT: 0,
+                        oP: 180
+                    });
+    earth.addCore({cMap: "earth/mainmap", sMap: "earth/specmap"});
+    earth.addAtmo("earth/alphamap.jpg");
+
+    var sun = new Planet({name:"Sun", size:40});
+    sun.addCore({cMap:"sun/sunmap.jpg", emissive: 0xffffff});
+
+    s = new scene();
+    s.init();
+    s.setBackground("starfield.png");
+    s.addObj(sun);
+    s.addObj(earth);
+
+    s.render();
+
+</script>
+
+</body>
+</html>
+
