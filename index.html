@@ -24,8 +24,8 @@
                     });
     earth.addCore({cMap: "earth/mainmap", sMap: "earth/specmap"},10);
     earth.addAtmo({cMap: "earth/alphamap.jpg"},10);
-    for (var prop in earth.effects) {
-        console.log(earth.effects.prop);
+    for (var property in earth.effects) {
+        console.log(earth.effects[prop]);
     }
 
     var sun = new Planet({name:"Sun", size:40});
