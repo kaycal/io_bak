@@ -22,8 +22,8 @@
                         zT: 0,
                         oP: 180
                     });
-    earth.addCore({cMap: "earth/mainmap", sMap: "earth/specmap"},10); // can i do this?
-    earth.addAtmo("earth/alphamap.jpg");
+    earth.addCore({cMap: "earth/mainmap", sMap: "earth/specmap"},10);
+    earth.addAtmo({cMap: "earth/alphamap.jpg"},10);
 
     var sun = new Planet({name:"Sun", size:40});
     sun.addCore({cMap:"sun/sunmap.jpg", emissive: 0xffffff},10);
