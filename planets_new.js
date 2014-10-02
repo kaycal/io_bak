@@ -32,7 +32,7 @@ Planet.prototype.addCore = function(maps,cRate) {
     var geometry = new THREE.SphereGeometry(this.positional.size,30,30);
     var material = new THREE.MeshPhongMaterial( {
                             map: THREE.ImageUtils.loadTexture(maps.cMap),
-                            emissive:map.emissive || null,
+                            emissive:maps.emissive || null,
                             specularMap: THREE.ImageUtils.loadTexture(maps.sMap) || null,
                             shininess: 100
                         } );
