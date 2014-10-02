@@ -22,11 +22,11 @@
                         zT: 0,
                         oP: 180
                     });
-    earth.addCore({maps:{cMap: "earth/mainmap", sMap: "earth/specmap"},cRate:10}); // can i do this?
+    earth.addCore({cMap: "earth/mainmap", sMap: "earth/specmap"},10); // can i do this?
     earth.addAtmo("earth/alphamap.jpg");
 
     var sun = new Planet({name:"Sun", size:40});
-    sun.addCore({maps:{cMap:"sun/sunmap.jpg", emissive: 0xffffff},cRate:10});
+    sun.addCore({cMap:"sun/sunmap.jpg", emissive: 0xffffff},10);
 
     s = new scene();
     s.init();
