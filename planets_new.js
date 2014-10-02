@@ -28,37 +28,47 @@ Planet.prototype = Object.create( THREE.Object3D.prototype );
 //
 // Aesthetic functions
 //////////////////////
-Planet.prototype.addCore = function(map) {
+Planet.prototype.addCore = function(maps,cRate) {
     var geometry = new THREE.SphereGeometry(this.positional.size,30,30);
     var material = new THREE.MeshPhongMaterial( {
-                            map: THREE.ImageUtils.loadTexture(map.cMap),
+                            map: THREE.ImageUtils.loadTexture(maps.cMap),
                             emissive:map.emissive || null,
-                            specularMap: THREE.ImageUtils.loadTexture(map.sMap) || null,
+                            specularMap: THREE.ImageUtils.loadTexture(maps.sMap) || null,
                             shininess: 100
                         } );
     var core = new THREE.Mesh( geometry, material );
+    core.cRate = cRate; // Rate of change
     this.core = core;
     this.add(this.core);
 }
 
-Planet.prototype.addAtmo = function(cMap) {
+Planet.prototype.addAtmo = function(maps,cRate) {
     var geometry = new THREE.SphereGeometry(this.positional.size+1,30,30);
     var material = new THREE.MeshPhongMaterial( {
-                            map: THREE.ImageUtils.loadTexture(cMap),
+                            map: THREE.ImageUtils.loadTexture(maps.cMap),
                             side: THREE.DoubleSide,
                             transparent: true,
                             opacity: 0.3,
                             shininess:0,
                         } );
-    var earth = new THREE.Mesh( geometry, material );
-    this.atmo = earth;
+    var atmo = new THREE.Mesh( geometry, material );
+    atmo.cRate = cRate; // Rate of change
+    this.atmo = atmo;
     this.add(this.atmo);
 }
 
 Planet.prototype.addSea = function() {
-
+    // this is going to be fun to do but a pain in the ass
+    // check out custom shaders later. should be more interesting
+    //   than just a specmap or something
 }
 
+Planet.prototype.addeffect = function(type,cRate) {
+    // match type against sea/core/atmo
+    // set custom rate of change
+    // Above named functions (addatmo/sea/etc) should ideally return their respective effects;
+    //   addeffect will then add them, like this.<type> = addAtmo(args)
+}
 
 //
 // Utility functions
@@ -67,8 +77,8 @@ Planet.prototype.update = function(delta) {
     this.rotation.y+=0.01;
 
 //  for prop in this.effects:
-//    this.atmo.rotation.y+=0.01;
-//    this.atmo.rotation.x-=0.02;
+//    this.prop.rotation.y+=0.01;
+//    this.prop.rotation.x-=0.02;
     this.positional.rad = this.positional.rad + (delta*2*Math.PI)/this.positional.period;
     // theta = theta % (Math.PI*2)
     this.position = this.getPos(this.positional.rad);
