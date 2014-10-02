@@ -33,8 +33,8 @@ Planet.prototype.addCore = function(maps,cRate) {
     var material = new THREE.MeshPhongMaterial( {
                             map: THREE.ImageUtils.loadTexture(maps.cMap),
                             emissive:maps.emissive || null,
-                            specularMap: THREE.ImageUtils.loadTexture(maps.sMap) || null,
-                            shininess: 100
+//                            specularMap: THREE.ImageUtils.loadTexture(maps.sMap) || null,
+//                            shininess: 100
                         } );
     var core = new THREE.Mesh( geometry, material );
     core.cRate = cRate; // Rate of change
@@ -80,10 +80,10 @@ Planet.prototype.update = function(delta) {
 //    this.prop.rotation.y+=0.01;
 //    this.prop.rotation.x-=0.02;
     for(var propt in this.effects){
-        console.log(propt);
+        //console.log(propt);
         if (propt!=null) {
-            propt.rotation.y+=0.01*propt.cRate;
-            propt.rotation.x-=0.02*propt.cRate;
+            propt.rotation.y+=0.01;
+            propt.rotation.x-=0.02;
         }
     }
 
