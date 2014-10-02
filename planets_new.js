@@ -79,13 +79,7 @@ Planet.prototype.update = function(delta) {
 //  for prop in this.effects:
 //    this.prop.rotation.y+=0.01;
 //    this.prop.rotation.x-=0.02;
-    for(var propt in this.effects){
-        //console.log(propt);
-        if (propt!=null) {
-            propt.rotation.y+=0.01;
-            propt.rotation.x-=0.02;
-        }
-    }
+    
 
 
     this.positional.rad = this.positional.rad + (delta*2*Math.PI)/this.positional.period;
