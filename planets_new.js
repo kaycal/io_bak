@@ -36,9 +36,6 @@ Planet.prototype.addCore = function(maps,cRate) {
                             specularMap: THREE.ImageUtils.loadTexture(maps.sMap) || null,
                             shininess: 100
                         } );
-/*    if (maps.sMap!=null) {
-        //material.specularMap = THREE.ImageUtils.loadTexture(maps.sMap);
-    } */
     var core = new THREE.Mesh( geometry, material );
     core.cRate = cRate; // Rate of change
     this.core = core;
@@ -82,6 +79,15 @@ Planet.prototype.update = function(delta) {
 //  for prop in this.effects:
 //    this.prop.rotation.y+=0.01;
 //    this.prop.rotation.x-=0.02;
+    for(var propt in this.effects){
+        console.log(propt);
+        if (propt!=null) {
+            propt.rotation.y+=0.01*propt.cRate;
+            propt.rotation.x-=0.02*propt.cRate;
+        }
+    }
+
+
     this.positional.rad = this.positional.rad + (delta*2*Math.PI)/this.positional.period;
     // theta = theta % (Math.PI*2)
     this.position = this.getPos(this.positional.rad);
