@@ -33,11 +33,12 @@ Planet.prototype.addCore = function(maps,cRate) {
     var material = new THREE.MeshPhongMaterial( {
                             map: THREE.ImageUtils.loadTexture(maps.cMap),
                             emissive:maps.emissive || null,
+                            specularMap: THREE.ImageUtils.loadTexture(maps.sMap) || null,
                             shininess: 100
                         } );
-    if (maps.sMap!=null) {
-        material.specularMap = THREE.ImageUtils.loadTexture(maps.sMap);
-    }
+/*    if (maps.sMap!=null) {
+        //material.specularMap = THREE.ImageUtils.loadTexture(maps.sMap);
+    } */
     var core = new THREE.Mesh( geometry, material );
     core.cRate = cRate; // Rate of change
     this.core = core;
