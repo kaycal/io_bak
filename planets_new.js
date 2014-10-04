@@ -4,7 +4,7 @@ Planet = function(args) {
 
     this.description = {
         name:args.name,
-    }
+    };
 
     this.positional = {
         size: args.size || 20,
@@ -13,13 +13,9 @@ Planet = function(args) {
         zTilt: args.zT  || 0,
         period: args.oP || 1,
         rad: 1.5 * Math.PI // Change this to birthday
-    }
+    };
     
-    this.effects = {
-        core:null,
-        atmo:null,
-        sea:null,
-    }
+    this.effects = [];
 }
 
 Planet.prototype = Object.create( THREE.Object3D.prototype );
@@ -38,8 +34,8 @@ Planet.prototype.addCore = function(maps,cRate) {
                         } );
     var core = new THREE.Mesh( geometry, material );
     core.cRate = cRate; // Rate of change
-    this.effects.core = core;
-    this.add(this.effects.core);
+    this.effects.push(core);
+    this.add(core);
 }
 
 Planet.prototype.addAtmo = function(maps,cRate) {
@@ -53,8 +49,8 @@ Planet.prototype.addAtmo = function(maps,cRate) {
                         } );
     var atmo = new THREE.Mesh( geometry, material );
     atmo.cRate = cRate; // Rate of change
-    this.effects.atmo = atmo;
-    this.add(this.effects.atmo);
+    this.effects.push(atmo);
+    this.add(atmo);
 }
 
 Planet.prototype.addSea = function() {
@@ -79,6 +75,11 @@ Planet.prototype.update = function(delta) {
 //  for prop in this.effects:
 //    this.prop.rotation.y+=0.01;
 //    this.prop.rotation.x-=0.02;
+    for (prop in this.effects) {
+    	var p = this.effects[prop];
+    	p.rotation.y+=0.01*p.cRate*delta;
+    	p.rotation.x-=0.02*p.cRate*delta;
+    }
     
 
 
