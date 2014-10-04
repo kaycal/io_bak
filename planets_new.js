@@ -39,7 +39,7 @@ Planet.prototype.addCore = function(maps,cRate) {
     var core = new THREE.Mesh( geometry, material );
     core.cRate = cRate; // Rate of change
     this.effects.core = core;
-    this.add(this.core);
+    this.add(this.effects.core);
 }
 
 Planet.prototype.addAtmo = function(maps,cRate) {
@@ -54,7 +54,7 @@ Planet.prototype.addAtmo = function(maps,cRate) {
     var atmo = new THREE.Mesh( geometry, material );
     atmo.cRate = cRate; // Rate of change
     this.effects.atmo = atmo;
-    this.add(this.atmo);
+    this.add(this.effects.atmo);
 }
 
 Planet.prototype.addSea = function() {
