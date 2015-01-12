@@ -1,42 +1,84 @@
 <!doctype html>
 <html lang="en">
-<head>
-	<title>Hello World (Three.js)</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-</head>
-<body>
+    <head>
+        <title>Perlin noise | Fireball explosion</title>
+        <meta charset="utf-8">
+        <script src="three.min.js"></script>
+        <script src="Galaxy_bak.js"></script>
+        <script src="Planet.js"></script>
+        <script src="scene.js"></script>
+        <script src="TrackballControls.js"></script>
+    </head>
 
-<script src="three.min.js"></script>
-<script src="planets_new.js"></script>
-<script src="TrackballControls.js"></script>
-<script src="scene.js"></script>
+    <body>
+
+        <div id="canvas"></div>
+    </body>
+
+<script id="defaultVertexShader" type="x-shader/x-vertex">
+        varying vec2 vUv;
+        varying vec3 vNormal;
+        varying vec3 vPos;
+
+        void main() {
+            vUv = uv;
+            vPos = (modelMatrix * vec4(position, 1.0 )).xyz;
+            vNormal = (modelMatrix * vec4(normal, 0.0)).xyz;
+
+            gl_Position = projectionMatrix *
+                modelViewMatrix *
+                vec4(position,1.0);
+        }
+</script>
+
+<script id="defaultFragmentShader" type="x-shader/x-fragment">
+
+        uniform sampler2D texture;
+        uniform sampler2D texture2;
+        uniform float time;
+        varying vec3 vNormal;
+        varying vec2 vUv;
+
+        varying vec3 vPos;
+        uniform vec3 pointLightColor[MAX_POINT_LIGHTS];
+        uniform vec3 pointLightPosition[MAX_POINT_LIGHTS];
+        uniform float pointLightDistance[MAX_POINT_LIGHTS];
+
+        void main() {
+
+                // Spawn the lights that will be used later in calcs
+                vec3 lightDirection;
+                vec4 addedLights = vec4(0.0,0.0,0.0, 1.0);
+                for(int l = 0; l < MAX_POINT_LIGHTS; l++) {
+                    lightDirection = normalize(vPos
+                                          -pointLightPosition[l]);
+                    addedLights.rgb += clamp(dot(-lightDirection,
+                                             vNormal), 0.0, 1.0)
+                                       * pointLightColor[l];
+
+                }
+
+                // Construct the lights
+                vec4 lights = clamp(addedLights,0.1,1.0);
+
+                // Set up our base-layer w/ light
+                vec3 dayComponent = texture2D( texture, vUv ).rgb;
+                vec4 dayColors = vec4( dayComponent, 1.0 ) * lights;
+
+                // Set up the night lights
+                vec3 nightComponent = texture2D( texture2, vUv ).rgb;
+                vec4 nightColors = vec4(nightComponent,1.0) * (1.0 - lights);
+
+                // Add the results;
+                gl_FragColor = dayColors + nightColors;
+
+        }
+</script>
 
 
 <script>
-    var earth = new Planet({
-                        name:"Earth",
-                        size:20,
-                        aX: 150,
-                        aY: 150,
-                        zT: 0,
-                        oP: 180
-                    });
-    earth.addCore({cMap: "earth/mainmap", sMap: "earth/specmap"},5);
-    earth.addAtmo({cMap: "earth/alphamap.jpg"},-5);
+    var scene = new Scene(new Galaxy(/* Insert galaxy url*/));
 
-    var sun = new Planet({name:"Sun", size:40});
-    sun.addCore({cMap:"sun/sunmap.jpg", emissive: 0xffffff},0.1);
-
-    s = new scene();
-    s.init();
-    s.setBackground("starfield.png");
-    s.addObj(sun);
-    s.addObj(earth);
-
-    s.render();
+//    scene.playToggle(true);
 </script>
-
-</body>
 </html>
-
