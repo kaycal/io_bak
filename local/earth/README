@@ -1,0 +1,6 @@
+Note to self;
+* Render planet using:
+ - geophysical; this will encompass predominantly geography, water, and maybe fauna
+ - layers; dynamically rendered shit: think civ-level, weather, etc
+
+* Have already effectively written portions of both; but keep in mind, these will be utilizing distinct shaders
