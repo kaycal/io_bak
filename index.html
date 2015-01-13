@@ -4,16 +4,15 @@
         <title>Perlin noise | Fireball explosion</title>
         <meta charset="utf-8">
         <script src="three.min.js"></script>
-        <script src="Galaxy_bak.js"></script>
+        <script src="jquery.min.js"></script>
+        <script src="Galaxy.js"></script>
         <script src="Planet.js"></script>
-        <script src="scene.js"></script>
         <script src="TrackballControls.js"></script>
     </head>
 
-    <body>
-
+    <body onload="local.playToggle(true);">
         <div id="canvas"></div>
-    </body>
+
 
 <script id="defaultVertexShader" type="x-shader/x-vertex">
         varying vec2 vUv;
@@ -77,8 +76,11 @@
 
 
 <script>
-    var scene = new Scene(new Galaxy(/* Insert galaxy url*/));
+    // var {{ galaxy.name }} = new Galaxy({{ galaxy.json }});
+    var local = new Galaxy("local/stats.json");
 
-//    scene.playToggle(true);
+    // {{ galaxy.name }}.playToggle(true, dateTime);
+    // body.onload = local.playToggle;
 </script>
+</body>
 </html>
