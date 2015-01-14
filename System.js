@@ -22,6 +22,8 @@ System = function(url) {
     this.clock = new THREE.Clock();
     this.controls = new THREE.TrackballControls(this.camera);
 
+    this.planets = [];
+
     $.getJSON(url, this.loadSystem.bind(this));
 
     // Get vital stats
@@ -41,7 +43,6 @@ System.prototype.loadSystem = function(stats) {
     pl.position.set( 0, 0, 0);
     this.add(pl); // set position.set( 0, 0, 0 );
 
-    this.planets = [];
     p = new Planet(this.add.bind(this)); // Create new planet w/ added "add me" callback
     this.planets.push(p);
 }
