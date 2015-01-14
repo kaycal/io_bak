@@ -22,7 +22,7 @@ System = function(url) {
     this.clock = new THREE.Clock();
     this.controls = new THREE.TrackballControls(this.camera);
 
-    this.loadSystem(url);
+    $.getJSON(url, this.loadSystem.bind(this));
 
     // Get vital stats
     //  Planets
@@ -35,18 +35,14 @@ System = function(url) {
 /////////////////////////////
 System.prototype = Object.create( THREE.Scene.prototype );
 
-System.prototype.loadSystem = function(url) {
-    $.getJSON(url, function(data) {
-        console.log(data);
-    })
-    // Experimental crap follows;
+System.prototype.loadSystem = function(stats) {
 
     var pl = new THREE.PointLight( 0xffffff, 4, 1000 );
     pl.position.set( 0, 0, 0);
     this.add(pl); // set position.set( 0, 0, 0 );
 
     this.planets = [];
-    p = new Planet(this.add.bind(this));
+    p = new Planet(this.add.bind(this)); // Create new planet w/ added "add me" callback
     this.planets.push(p);
 }
 

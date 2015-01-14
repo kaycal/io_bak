@@ -1,7 +1,6 @@
 Planet = function(callback) {
     THREE.Object3D.call( this );
 
-    this.ready = 0;
     var tex2 = THREE.ImageUtils.loadTexture( "nightlights.jpg");
         tex2.needsUpdate = true;
     var tex = THREE.ImageUtils.loadTexture( "mainmap.jpg");
@@ -19,7 +18,7 @@ Planet = function(callback) {
                             }
         ]);
 
-    var material = new THREE.ShaderMaterial({
+    material = new THREE.ShaderMaterial({
         uniforms: uniforms,
         vertexShader: vertShader,
         fragmentShader: fragShader,
